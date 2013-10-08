@@ -1,0 +1,23 @@
+#!/bin/bash
+
+function log_cmdline() {
+    local prio="${1}"; shift
+    local msg="${1}"; shift
+    local cmdline="${1}"; shift
+    for i in "${@}" ; do
+	cmdline="${cmdline} \"${i}\""
+    done
+    logger -p "${prio}" -t "rsyncshell[$(whoami)]" "${msg} ${cmdline}"
+}
+
+if [[ ${1} == "-c" ]] && [[ ${2} =~ ^(/usr/bin/)?(rsync --server ) ]] ; then
+    log_cmdline auth.info "OK" "${0}" "${@}"
+    exec /bin/bash "${@}"
+    exit 2
+else
+    log_cmdline auth.err "ERROR" "${0}" "${@}"
+    exit 1
+fi
+
+# Copyright © 2012-2013 Stelian Ionescu <sionescu@cddr.org>
+# See LICENCE for details
