@@ -1,4 +1,6 @@
 #!/bin/bash
+# Copyright © 2012-2013 Stelian Ionescu <sionescu@cddr.org>
+# See LICENCE for details
 
 function log_cmdline() {
     local prio="${1}"; shift
@@ -18,6 +20,3 @@ else
     log_cmdline auth.err "ERROR" "${0}" "${@}"
     exit 1
 fi
-
-# Copyright © 2012-2013 Stelian Ionescu <sionescu@cddr.org>
-# See LICENCE for details
